@@ -3,5 +3,5 @@ all:
 	rm -rf ebin/* *~ */*~ ;
 #	application
 	cp src/*.app ebin;
-	rm -rf src/*.beam *.beam;
+	erlc -o ebin src/*.erl;
 	echo Done
