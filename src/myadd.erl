@@ -37,7 +37,8 @@
 %% Returns: List({HostId,Ip,SshPort,Uid,Pwd}
 %% --------------------------------------------------------------------
 
--export([add/2,
+-export([
+	 
 	ping/0,
 	start/0,
 	stop/0
@@ -56,11 +57,10 @@
 %%----------------------------------------------------------------------
 %% Gen server functions
 
-start()-> gen_server:start_link({local, ?SERVER}, ?SERVER, [], []).
-stop()-> gen_server:call(?SERVER, {stop},infinity).
-
-add(A,B)-> 
-    gen_server:call(?SERVER, {add,A,B},infinity).
+start()-> 
+    gen_server:start_link(?SERVER,[],[]).
+stop()-> 
+    gen_server:call(?SERVER, {stop},infinity).
 
 %%---------------------------------------------------------------
 -spec ping()-> {atom(),node(),module()}|{atom(),term()}.
@@ -101,10 +101,6 @@ init([]) ->
 %%          {stop, Reason, Reply, State}   | (terminate/2 is called)
 %%          {stop, Reason, State}            (aterminate/2 is called)
 %% --------------------------------------------------------------------
-handle_call({add,A,B},_From,State) ->
-    Reply=A+B,
-    {reply, Reply, State};
-
 handle_call({ping},_From,State) ->
     Reply={pong,node(),?MODULE},
     {reply, Reply, State};
@@ -135,6 +131,10 @@ handle_cast(Msg, State) ->
 %%          {noreply, State, Timeout} |
 %%          {stop, Reason, State}            (terminate/2 is called)
 %% --------------------------------------------------------------------
+
+handle_info({ClientPid,{myadd,add,[A,B]}}, State) ->
+    ClientPid!{self(),A+B},
+    {noreply, State};
 
 handle_info(Info, State) ->
     io:format("unmatched match info ~p~n",[{?MODULE,?LINE,Info}]),

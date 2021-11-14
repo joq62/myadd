@@ -46,7 +46,7 @@
 start(_Type, _StartArgs) ->
     {ok,Pid}= myadd_sup:start_link(),
     {ok,Pid}.
-   
+
 %% --------------------------------------------------------------------
 %% Func: stop/1
 %% Returns: any

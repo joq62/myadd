@@ -9,7 +9,6 @@ unit_test:
 	rm -rf ebin/* test_ebin *~ */*~ ;
 #	test
 	mkdir test_ebin;
-	cp test_src/*.app test_ebin;
 	erlc -o test_ebin test_src/*.erl;
 #	application
 	cp src/*.app ebin;
