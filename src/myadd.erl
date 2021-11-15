@@ -56,7 +56,7 @@
 %%----------------------------------------------------------------------
 %% Gen server functions
 
-start()-> gen_server:start_link({local, ?SERVER}, ?SERVER, [], []).
+start()-> gen_server:start_link(?SERVER, [], []).
 stop()-> gen_server:call(?SERVER, {stop},infinity).
 
 add(A,B)-> 
@@ -140,7 +140,7 @@ handle_info({Pid,add,[A,B]}, State) ->
     {noreply, State};
 
 handle_info({stop}, State) ->
-    exit(stopped),
+    exit(normal),
     {noreply, State};
 
 handle_info(Info, State) ->
