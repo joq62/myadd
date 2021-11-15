@@ -140,6 +140,9 @@ handle_info({Pid,add,[A,B]}, State) ->
     Pid!{self(),{ok,A+B}},
     {noreply, State};
 
+
+handle_info({stop}, State) ->
+    {stop, normal, shutdown_ok, State};
 handle_info(Info, State) ->
     io:format("unmatched match info ~p~n",[{?MODULE,?LINE,Info}]),
     {noreply, State}.
