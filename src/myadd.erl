@@ -109,6 +109,7 @@ handle_call({ping},_From,State) ->
     {reply, Reply, State};
 
 handle_call({stop}, _From, State) ->
+    
     {stop, normal, shutdown_ok, State};
 
 handle_call(Request, From, State) ->
@@ -134,6 +135,10 @@ handle_cast(Msg, State) ->
 %%          {noreply, State, Timeout} |
 %%          {stop, Reason, State}            (terminate/2 is called)
 %% --------------------------------------------------------------------
+
+handle_info({Pid,add,[A,B]}, State) ->
+    Pid!{self(),{ok,A+B}},
+    {noreply, State};
 
 handle_info(Info, State) ->
     io:format("unmatched match info ~p~n",[{?MODULE,?LINE,Info}]),
