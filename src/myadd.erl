@@ -136,11 +136,12 @@ handle_cast(Msg, State) ->
 %% --------------------------------------------------------------------
 
 handle_info({Pid,add,[A,B]}, State) ->
-    Pid!{self(),{ok,A+B}},
+    Pid!{self(),A+B},
     {noreply, State};
 
 handle_info({stop}, State) ->
-    exit(normal),
+    io:format("stop ~p~n",[{?MODULE,?LINE}]),
+    exit(self(),normal),
     {noreply, State};
 
 handle_info(Info, State) ->
