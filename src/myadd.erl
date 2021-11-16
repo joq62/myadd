@@ -56,7 +56,7 @@
 %%----------------------------------------------------------------------
 %% Gen server functions
 
-start()-> gen_server:start_link(?SERVER, [], []).
+start()-> gen_server:start_link({local, ?SERVER}, ?SERVER, [], []).
 stop()-> gen_server:call(?SERVER, {stop},infinity).
 
 add(A,B)-> 
