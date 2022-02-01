@@ -105,7 +105,7 @@ handle_call({add,A,B},_From,State) ->
     {reply, Reply, State};
 
 handle_call({ping},_From,State) ->
-    Reply={pong,node(),?MODULE},
+    Reply=pong,
     {reply, Reply, State};
 
 handle_call({stop}, _From, State) ->    
